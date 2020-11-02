@@ -16,11 +16,14 @@
           </li>
           <li
             v-if="hasItemsInCart"
-            class="nav-item"
+            class="nav-item cart"
         >
             <router-link class="nav-link" :to="{name: 'Cart'}" exact>
               Cart
             </router-link>
+            <div class="cart-items">
+                {{ itemsInCart }}
+            </div>
           </li>
         </ul>
       </nav>
@@ -42,7 +45,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'app',
   computed: {
-      ...mapGetters(['hasItemsInCart'])
+      ...mapGetters(['hasItemsInCart', 'itemsInCart'])
   },
 };
 </script>
@@ -80,7 +83,20 @@ ul {
   border-right: 1px solid #bbb;
 }
 .nav-item.cart {
-
+    position: relative;
+    margin-left: auto;
+    border-right: none;
+}
+.cart-items {
+    position: absolute;
+    top: -5px;
+    right: -9px;
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: mediumaquamarine;
 }
 .logo {
   vertical-align: middle;
@@ -104,4 +120,5 @@ ul {
   width: 100px;
   min-height: 300px;
 }
+
 </style>

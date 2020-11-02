@@ -19,6 +19,7 @@ export default new Vuex.Store({
     },
     getters: {
         getCart: (state) => state.cart,
-        hasItemsInCart: state => !!state.cart.length
+        hasItemsInCart: state => !!state.cart.length,
+        itemsInCart: state => state.cart.length
     },
 })
