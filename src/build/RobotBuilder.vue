@@ -1,93 +1,95 @@
 <template>
-  <div class="content">
-    <div class="preview">
-      <CollapsibleSection>
-        <div class="preview-content">
-          <div class="top-row">
-            <img :src="selectedRobot.head.src"/>
-          </div>
-          <div class="middle-row">
-            <img :src="selectedRobot.leftArm.src" class="rotate-left"/>
-            <img :src="selectedRobot.torso.src"/>
-            <img :src="selectedRobot.rightArm.src" class="rotate-right"/>
-          </div>
-          <div class="bottom-row">
-            <img :src="selectedRobot.base.src"/>
-          </div>
+    <div
+        v-if="availableParts"
+        class="content"
+    >
+        <div class="preview">
+            <CollapsibleSection>
+                <div class="preview-content">
+                    <div class="top-row">
+                        <img :src="selectedRobot.head.src"/>
+                    </div>
+                    <div class="middle-row">
+                        <img :src="selectedRobot.leftArm.src" class="rotate-left"/>
+                        <img :src="selectedRobot.torso.src"/>
+                        <img :src="selectedRobot.rightArm.src" class="rotate-right"/>
+                    </div>
+                    <div class="bottom-row">
+                        <img :src="selectedRobot.base.src"/>
+                    </div>
+                </div>
+            </CollapsibleSection>
+            <button
+                class="add-to-cart"
+                @click="addToCart()"
+            >
+                Add to Cart
+            </button>
         </div>
-      </CollapsibleSection>
-      <button class="add-to-cart" @click="addToCart()">Add to Cart</button>
+        <div class="top-row">
+            <PartSelector
+                :parts="availableParts.heads"
+                position="top"
+                @partSelected="part => selectedRobot.head=part"
+            />
+        </div>
+        <div class="middle-row">
+            <PartSelector
+                :parts="availableParts.arms || []"
+                position="left"
+                @partSelected="part => selectedRobot.leftArm=part"
+            />
+            <PartSelector
+                :parts="availableParts.torsos || []"
+                position="center"
+                @partSelected="part => selectedRobot.torso=part"
+            />
+            <PartSelector
+                :parts="availableParts.arms || []"
+                position="right"
+                @partSelected="part => selectedRobot.rightArm=part"
+            />
+        </div>
+        <div class="bottom-row">
+            <PartSelector
+                :parts="availableParts.bases || []"
+                position="bottom"
+                @partSelected="part => selectedRobot.base=part"
+            />
+        </div>
     </div>
-    <div class="top-row">
-        <!-- <div class="robot-name">
-          {{selectedRobot.head.title}}
-          <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
-        </div> -->
-        <PartSelector
-          :parts="availableParts.heads"
-          position="top"
-          @partSelected="part => selectedRobot.head=part"/>
-    </div>
-    <div class="middle-row">
-      <PartSelector
-        :parts="availableParts.arms"
-        position="left"
-        @partSelected="part => selectedRobot.leftArm=part"/>
-      <PartSelector
-        :parts="availableParts.torsos"
-        position="center"
-        @partSelected="part => selectedRobot.torso=part"/>
-      <PartSelector
-        :parts="availableParts.arms"
-        position="right"
-        @partSelected="part => selectedRobot.rightArm=part"/>
-    </div>
-    <div class="bottom-row">
-      <PartSelector
-        :parts="availableParts.bases"
-        position="bottom"
-        @partSelected="part => selectedRobot.base=part"/>
-    </div>
-  </div>
 </template>
 
 <script>
-import availableParts from '../data/parts';
 import createdHookMixin from './created-hook-mixin';
 import PartSelector from './PartSelector.vue';
 import CollapsibleSection from '../shared/CollapsibleSection.vue';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'RobotBuilder',
-  beforeRouteLeave(to, from, next) {
-    if (this.addedToCart) {
-      next(true);
-    } else {
-      /* eslint no-alert: 0 */
-      /* eslint no-restricted-globals: 0 */
-      const response = confirm('You have not added your robot to your cart, are you sure you want to leave?');
-      next(response);
-    }
-  },
-  components: { PartSelector, CollapsibleSection },
-  data() {
-    return {
-      availableParts,
-      addedToCart: false,
-      // cart: [],
-      selectedRobot: {
-        head: {},
-        leftArm: {},
-        torso: {},
-        rightArm: {},
-        base: {},
-      },
-    };
-  },
-  mixins: [createdHookMixin],
+    name: 'RobotBuilder',
+    mixins: [createdHookMixin],
+    components: {
+        PartSelector,
+        CollapsibleSection
+    },
+    data() {
+        return {
+            addedToCart: false,
+            selectedRobot: {
+                head: {},
+                leftArm: {},
+                torso: {},
+                rightArm: {},
+                base: {},
+            },
+        };
+    },
     computed: {
-        ...mapGetters({'cart': 'getCart'}),
+        ...mapGetters({
+            'cart': 'robot/getCart',
+            'availableParts': 'robot/getParts'
+        }),
         saleBorderClass() {
             return this.selectedRobot.head.onSale ? 'sale-border' : '';
         },
@@ -98,21 +100,36 @@ export default {
                 '3px solid #aaa',
             };
         },
-  },
-methods: {
-    ...mapActions(['addRobot']),
-    addToCart() {
-        const robot = this.selectedRobot;
-        const cost = robot.head.cost +
-            robot.leftArm.cost +
-            robot.torso.cost +
-            robot.rightArm.cost +
-            robot.base.cost;
-
-        this.addRobot({ ...robot, cost });
-        this.addedToCart = true;
     },
-  },
+    methods: {
+        ...mapActions('robot', ['addRobot','loadParts']),
+        addToCart() {
+            const robot = this.selectedRobot;
+            const cost = robot.head.cost +
+                robot.leftArm.cost +
+                robot.torso.cost +
+                robot.rightArm.cost +
+                robot.base.cost;
+
+            this
+                .addRobot({ ...robot, cost })
+                .then(() => {
+                    this.addedToCart = true;
+                    this.$router.push('./cart');
+                });
+        },
+    },
+    created () {
+        this.loadParts();
+    },
+    beforeRouteLeave(to, from, next) {
+        if (this.addedToCart) {
+            next(true);
+        } else {
+            const response = confirm('You have not added your robot to your cart, are you sure you want to leave?');
+            next(response);
+        }
+    }
 };
 </script>
 

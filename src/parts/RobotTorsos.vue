@@ -12,12 +12,15 @@
 </template>
 
 <script>
-import parts from '../data/parts';
+import robotPartLoaderMixin from './robotPartLoaderMixin';
 
 export default {
   name: 'RobotTorsos',
-  data() {
-    return { torsos: parts.torsos };
-  },
+   mixins: [robotPartLoaderMixin],
+    computed: {
+        torsos() {
+            return this.parts ? this.parts.torsos : [];
+        }
+    }
 };
 </script>

@@ -51,14 +51,14 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
     name: 'Cart',
     computed: {
         ...mapGetters({
-            'cart': 'getCart',
-            'cartSaleItems': 'getCartSaleItems'
+            'cart': 'robot/getCart',
+            'cartSaleItems': 'robot/getCartSaleItems'
         })
     },
 };

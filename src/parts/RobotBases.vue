@@ -5,19 +5,22 @@
     sure to choose a base that will work well with the terrain
     where your robot needs to operate.
     <div v-for="(base, idx) in bases" :key="idx">
-      <h4>{{base.title}}</h4>
-      <div>{{base.description}}</div>
+      <h4>{{ base.title }}</h4>
+      <div>{{ base.description }}</div>
     </div>
   </div>
 </template>
 
 <script>
-import parts from '../data/parts';
+import robotPartLoaderMixin from './robotPartLoaderMixin';
 
 export default {
-  name: 'RobotBases',
-  data() {
-    return { bases: parts.bases };
-  },
+    name: 'RobotBases',
+    mixins: [robotPartLoaderMixin],
+    computed: {
+        bases() {
+            return this.parts ? this.parts.bases : [];
+        }
+    }
 };
 </script>

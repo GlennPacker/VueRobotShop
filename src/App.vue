@@ -40,13 +40,13 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
-  name: 'app',
-  computed: {
-      ...mapGetters(['hasItemsInCart', 'itemsInCart'])
-  },
+    name: 'app',
+    computed: {
+        ...mapGetters('robot', ['hasItemsInCart', 'itemsInCart'])
+    },
 };
 </script>
 
