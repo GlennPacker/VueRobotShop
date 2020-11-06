@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebar standard">
     Standard Sidebar
   </div>
 </template>

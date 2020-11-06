@@ -25,4 +25,14 @@ context('Home page', () => {
         cy.visit(Cypress.env().url);
         cy.get('a.router-link-active').should('have.length', 1);
     })
+
+    it('should have the standard sidebar', () => {
+        cy.visit(Cypress.env().url);
+        cy.get('.sidebar').should('have.class', 'standard');
+    })
+
+    it('should have the home view', () => {
+        cy.visit(Cypress.env().url);
+        cy.get('main').find('.home');
+    })
 })
