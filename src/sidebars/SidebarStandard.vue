@@ -1,5 +1,8 @@
 <template>
-  <div class="sidebar standard">
+    <div
+          class="sidebar standard"
+          data-cy="sidebar-title"
+    >
     Standard Sidebar
   </div>
 </template>
