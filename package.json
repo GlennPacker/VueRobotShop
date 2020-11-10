@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-      "build": "vue-cli-service build",
-      "cypress": "npx cypress open",
-      "serve": "vue-cli-service serve"
+    "build": "vue-cli-service build",
+    "cypress": "npx cypress open",
+    "serve": "vue-cli-service serve",
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "axios": "^0.21.0",
@@ -20,6 +21,8 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
+    "@vue/test-utils": "^1.0.3",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "vue-template-compiler": "^2.6.11"
@@ -28,5 +31,9 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "jest": {
+    "preset": "@vue/cli-plugin-unit-jest",
+    "testPathIgnorePatterns": ["cypress"]
+  }
 }
