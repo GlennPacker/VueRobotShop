@@ -1,4 +1,4 @@
-import { mount, shallowMount, RouterLinkStub } from '@vue/test-utils'
+import { mount, RouterLinkStub } from '@vue/test-utils'
 import HomePage from '../src/home/HomePage.vue'
 
 test('check home page renders by looking for some hard coded text', async () => {
