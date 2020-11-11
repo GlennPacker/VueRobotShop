@@ -1,17 +1,19 @@
 <template>
-  <div>
+  <div v-if="part">
     <h1>{{ part.title }}</h1>
-    <div >
+    <div class="description">
       {{part.description}}
     </div>
   </div>
 </template>
 
 <script>
-import parts from '../data/parts';
+import { mapGetters, mapActions } from 'vuex'
+import robotPartLoaderMixin from './robotPartLoaderMixin';
 
 export default {
   name: 'PartInfo',
+  mixins: [robotPartLoaderMixin],
   props: {
     partType: { type: String },
     id: {
@@ -23,8 +25,8 @@ export default {
   },
   computed: {
     part() {
-      const { partType, id } = this;
-      return parts[partType].find(part => part.id === +id);
+      const { partType, id, parts } = this;
+      return parts && parts[partType].find(part => part.id === +id);
     },
   },
 };

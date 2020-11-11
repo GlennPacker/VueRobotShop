@@ -46,7 +46,7 @@ export default new Router({
             component: RobotArms,
         }, {
             name: 'BrowseTorsos',
-            path: 'toros',
+            path: 'torsos',
             component: RobotTorsos,
         }, {
             name: 'BrowseBases',
