@@ -55,7 +55,6 @@ describe('RobotBuilder.vue', () => {
         expect(i).toBe(10);
     })
 
-
     it('should show main content when there are parts i.e the load parts api call is complete', async () => {
         const wrapper = shallowMount(RobotBuilder, {
             store, localVue

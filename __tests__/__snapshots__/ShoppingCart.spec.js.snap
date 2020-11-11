@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShoppingCart.vue basic snapshot- smoke test 1`] = `
+<div>
+  <h1>
+    Cart
+  </h1>
+   
+  <table>
+    <thead>
+      <tr>
+        <th
+          class="robot-title"
+        >
+          
+           Robot
+         
+        </th>
+         
+        <th
+          class="cost"
+        >
+          
+           Cost
+         
+        </th>
+      </tr>
+    </thead>
+     
+    <tbody />
+  </table>
+   
+  <h2
+    class="sale-items"
+  >
+    You saved money on these robots:
+  </h2>
+   
+  <table>
+    <thead>
+      <tr>
+        <th
+          class="robot-title"
+        >
+          
+           Robot
+         
+        </th>
+         
+        <th
+          class="cost"
+        >
+          
+           Cost
+         
+        </th>
+      </tr>
+    </thead>
+     
+    <tbody />
+  </table>
+</div>
+`;
