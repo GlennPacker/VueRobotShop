@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import parts from '../data/parts';
 import robotPartLoaderMixin from './robotPartLoaderMixin';
 
 export default {
